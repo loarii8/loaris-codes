@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simple Mario-like Game</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+        }
+        canvas {
+            display: block;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <canvas id="gameCanvas"></canvas>
+    <script>
+        const canvas = document.getElementById('gameCanvas');
+        canvas.width = window.innerWidth - 20;
+        canvas.height = window.innerHeight - 20;
+        const ctx = canvas.getContext('2d');
+
+        const player = {
+            x: 100,
+            y: canvas.height - 150,
+            width: 50,
+            height: 50,
+            color: 'red',
+            speed: 5,
+            velocityX: 0,
+            velocityY: 0,
+            gravity: 0.5,
+            jumpStrength: 10,
+            isJumping: false,
+            frameX: 0,
+            frameY: 0,
+            spriteWidth: 50,
+            spriteHeight: 50,
+            moving: false
+        };
+
+        const playerSprite = new Image();
+        playerSprite.src = 'https://via.placeholder.com/200x50'; // Placeholder image for testing
+
+        const keys = {
+            right: false,
+            left: false,
+            up: false
+        };
+
+        function drawPlayer() {
+            ctx.drawImage(
+                playerSprite,
+                player.frameX * player.spriteWidth,
+                player.frameY * player.spriteHeight,
+                player.spriteWidth,
+                player.spriteHeight,
+                player.x,
+                player.y,
+                player.width,
+                player.height
+            );
+        }
+
+        function update() {
+            // Update player position
+            player.x += player.velocityX;
+            player.y += player.velocityY;
+
+            // Apply gravity
+            if (player.isJumping) {
+                player.velocityY += player.gravity;
+            }
+
+            // Check for ground collision
+            if (player.y + player.height >= canvas.height - 150) {
+                player.y = canvas.height - 150 - player.height;
+                player.velocityY = 0;
+                player.isJumping = false;
+            }
+
+            // Update animation frame
+            if (player.moving && player.frameX < 3) {
+                player.frameX++;
+            } else if (!player.moving) {
+                player.frameX = 0;
+            }
+
+            clearCanvas();
+            drawPlayer();
+            requestAnimationFrame(update);
+        }
+
+        function clearCanvas() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+        }
+
+        function movePlayer(event) {
+            console.log('Key pressed:', event.key); // Debugging line
+            switch (event.key) {
+                case 'ArrowUp':
+                case ' ':
+                    if (!player.isJumping) {
+                        player.velocityY = -player.jumpStrength;
+                        player.isJumping = true;
+                    }
+                    break;
+                case 'ArrowLeft':
+                    keys.left = true;
+                    player.moving = true;
+                    break;
+                case 'ArrowRight':
+                    keys.right = true;
+                    player.moving = true;
+                    break;
+            }
+        }
+
+        function stopPlayer(event) {
+            console.log('Key released:', event.key); // Debugging line
+            switch (event.key) {
+                case 'ArrowLeft':
+                    keys.left = false;
+                    player.moving = false;
+                    break;
+                case 'ArrowRight':
+                    keys.right = false;
+                    player.moving = false;
+                    break;
+            }
+        }
+
+        function handleKeys() {
+            player.velocityX = 0;
+            if (keys.left) {
+                player.velocityX = -player.speed;
+            }
+            if (keys.right) {
+                player.velocityX = player.speed;
+            }
+        }
+
+        document.addEventListener('keydown', movePlayer);
+        document.addEventListener('keyup', stopPlayer);
+
+        function gameLoop() {
+            handleKeys();
+            update();
+        }
+
+        playerSprite.onload = () => {
+            console.log('Sprite loaded, starting game loop'); // Debugging line
+            gameLoop();
+        };
+
+        playerSprite.onerror = () => {
+            console.error('Failed to load sprite image'); // Debugging line
+        };
+    </script>
+</body>
+</html>

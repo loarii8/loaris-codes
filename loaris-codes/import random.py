@@ -1,4 +1,3 @@
-import random
 import time
 import os
 
@@ -6,7 +5,7 @@ def pastrimi_i_ekranit():
     """Pastro ekranin për të simuluar një skenë të re."""
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def printo_ngadalë(str, vonesë=0.03):
+def printo_ngadalë(str, vonesë=0.05):
     """Printon tekstin ngadalë, shkronjë për shkronjë."""
     for shkronjë in str:
         print(shkronjë, end='', flush=True)
@@ -17,18 +16,18 @@ def printo_visuale(skena):
     """Printon një pamje ASCII në bazë të skenës."""
     pamjet = {
         "fillim": """
-        ============================================
-        | Mirësevini në Aventurën e Madhe!         |
-        ============================================
+        =========================================
+        | Mirësevini në Aventurën e Madhe!      |
+        =========================================
             Udhëtimi juaj fillon këtu...
         """,
         "rruga_krejt": """
-        Hyni në pyll...
+        Hyni në një pyll të dendur...
            ,     ,
          ( o )-( o )
            `----'
         Pemët janë të dendura, ajri është i ftohtë.
-        Mund të dëgjoni fërshëllimën e gjetheve...
+        Dëgjoni fërshëllimën e gjetheve...
         """,
         "rruga_djathtas": """
         Hyni në një shpellë të errët...
@@ -39,12 +38,20 @@ def printo_visuale(skena):
         Më shijon një erë e lagur.
         Dëgjoni diçka që pikëllon brenda...
         """,
+        "rruga_përpara": """
+        Hyni në një fushë të gjelbër...
+        \\    /\\
+         )  ( ')
+        (  /  )
+         \\(__)|
+        Dëgjoni zhurmën e ujit që rrjedh...
+        """,
         "pasuri": """
         Gjetët një arkë të fshehtë thesari!
-        _  _  _  _  _  _
-       | | | | | | | | |
-       | | | | | | | | |
-       |_|_|_|_|_|_|_|_|
+        _  _  _  _  _
+       | | | | | | | |
+       | | | | | | | |
+       |_|_|_|_|_|_|_|
         Brenda gjeni 50 copa ari!
         """,
         "dragua": """
@@ -71,33 +78,65 @@ def printo_visuale(skena):
             `-._____.-'
         Magjistari ju jep një magji zjarri!
         """,
+        "liqeni": """
+        Hyni në një liqen të qetë...
+             ____
+          .-'    `-.
+        .-'          `-.
+       /                \\
+      |    _______      |
+       \\  /       \\    /
+        `'         `-''
+        Dëgjoni zhurmën e ujit që rrjedh...
+        """,
         "hendek": """
-        Hyni në një hendek të thellë!
+        Hyni në një hendek të thellë...
         _______
        /       \\
       |   O O   |
        \\_______/
-        Ju rrëzoheni dhe humbni disa pikë shëndeti.
+        Ju rrëzoheni dhe humbni shëndet!
         """
     }
     printo_ngadalë(pamjet.get(skena, ""))
 
 def zgjedh_aksion():
     """Përgjigje për zgjedhjen e një veprimi."""
-    printo_ngadalë("Keni 3 rrugë para jush. dhe mund te ktheheni mbrapa")
-    printo_ngadalë("A doni të shkoni majtas, djathtas, përpara ose mbrapa?")
-    zgjedhja = input("Shkruani 'majtas', 'djathtas', 'përpara' ose 'mbrapa': ").lower()
+    printo_ngadalë("Keni tre rrugë para jush.")
+    printo_ngadalë("A doni të shkoni majtas, djathtas apo përpara?")
+    zgjedhja = input("Shkruani 'majtas', 'djathtas' ose 'përpara': ").lower()
     return zgjedhja
 
-def ngjarje_random():
-    """Generon një ngjarje të rastësishme."""
-    ngjarje = [
-        "Gjetët një arkë të fshehtë thesari! Keni fituar 50 ari.",
-        "Një dragua e egër shfaqet! Ai rënkon, por arrini të shpëtoni.",
-        "Hyni në një hendek dhe humbni disa pikë shëndeti. Jini më të kujdesshëm!",
-        "Takoni një magjistar të mençur që ju dhuron një magji."
-    ]
-    return random.choice(ngjarje)
+def ngjarje_rrugës(rruga, shëndeti, ari, magji):
+    """Kthen një ngjarje të caktuar për çdo rrugë."""
+    if rruga == 'majtas':
+        if not magji:
+            printo_visuale("magjistari")
+            printo_ngadalë("Takoni një magjistar të mençur që ju dhuron një magji zjarri!")
+            magji.append("Zjarri")
+        else:
+            printo_visuale("dragua")
+            printo_ngadalë("Një dragua e egër shfaqet! Ai rënkon, por arrini të shpëtoni.")
+            shëndeti -= 10
+    elif rruga == 'djathtas':
+        if ari < 100:
+            printo_visuale("pasuri")
+            printo_ngadalë("Gjetët një arkë të fshehtë thesari! Keni fituar 50 ari.")
+            ari += 50
+        else:
+            printo_visuale("hendek")
+            printo_ngadalë("Hyni në një hendek dhe humbni disa pikë shëndeti. Jini më të kujdesshëm!")
+            shëndeti -= 20
+    else:
+        if shëndeti < 80:
+            printo_visuale("liqeni")
+            printo_ngadalë("Gjetët një liqen të qetë dhe u pini ujë të freskët. Shëndeti juaj u rrit.")
+            shëndeti += 10
+        else:
+            printo_visuale("dragua")
+            printo_ngadalë("Një dragua e egër shfaqet! Ai rënkon, por arrini të shpëtoni.")
+            shëndeti -= 10
+    return shëndeti, ari, magji
 
 def loja_aventura():
     """Funksioni kryesor i lojës."""
@@ -106,49 +145,22 @@ def loja_aventura():
     shëndeti = 100
     ari = 0
     magji = []
-    pozicioni = "fillim"
-    historiku_pozicionit = ["fillim"]
 
     while shëndeti > 0:
         # Merrni zgjedhjen e përdoruesit
         aksioni = zgjedh_aksion()
         pastrimi_i_ekranit()
 
-        # Përditësoni pozicionin dhe historikun e pozicionit
+        # Shfaq pamjen në bazë të rrugës të zgjedhur
         if aksioni == 'majtas':
-            pozicioni = "rruga_krejt"
+            printo_visuale("rruga_krejt")
         elif aksioni == 'djathtas':
-            pozicioni = "rruga_djathtas"
-        elif aksioni == 'përpara':
-            if pozicioni == "rruga_krejt":
-                pozicioni = "rruga_djathtas"
-            elif pozicioni == "rruga_djathtas":
-                pozicioni = "rruga_krejt"
-        elif aksioni == 'mbrapa':
-            if len(historiku_pozicionit) > 1:
-                historiku_pozicionit.pop()
-                pozicioni = historiku_pozicionit[-1]
-            else:
-                printo_ngadalë("Nuk mund të shkoni më mbrapa se këtu.")
-                continue
+            printo_visuale("rruga_djathtas")
+        else:
+            printo_visuale("rruga_përpara")
 
-        historiku_pozicionit.append(pozicioni)
-
-        # Shfaq pamjen në bazë të rrugës së zgjedhur
-        printo_visuale(pozicioni)
-
-        # Ngjarja e rastësishme në bazë të rrugës të zgjedhur
-        ngjarja = ngjarje_random()
-        printo_ngadalë(ngjarja)
-
-        if "ari" in ngjarja:
-            ari += 50
-        elif "dragua" in ngjarja:
-            shëndeti -= 10
-        elif "hendek" in ngjarja:
-            shëndeti -= 20
-        elif "magjistari" in ngjarja:
-            magji.append("Zjarri")
+        # Ngjarja e caktuar për çdo rrugë
+        shëndeti, ari, magji = ngjarje_rrugës(aksioni, shëndeti, ari, magji)
 
         # Shfaq statusin aktual
         printo_ngadalë(f"Shëndeti aktual: {shëndeti} | Ari: {ari} | Magjitë: {magji}")

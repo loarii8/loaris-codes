@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Page</title>
+    <style>
+      /* Google Font */
+      @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+
+      /* Global Styles */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Poppins', sans-serif;
+      }
+
+      body {
+        background: linear-gradient(to right, #ff7e5f, #feb47b);
+        color: white;
+        text-align: center;
+        padding: 20px;
+      }
+
+      h1 {
+        font-size: 2.5rem;
+        text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Button Styles */
+      .btn {
+        background: #fff;
+        color: #333;
+        padding: 15px 30px;
+        border: 2px solid #333;
+        font-size: 18px;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 10px;
+        transition: 0.3s;
+      }
+
+      .btn:hover {
+        background: #333;
+        color: #fff;
+      }
+
+      /* Dynamic Boxes */
+      .dynamic-box {
+        width: 200px;
+        height: 200px;
+        background: #fff;
+        color: #333;
+        margin: 20px auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 20px;
+        font-weight: bold;
+        border: 3px solid #333;
+        transition: all 0.3s;
+      }
+
+      /* Image Gallery */
+      .gallery {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      .gallery img {
+        width: 200px;
+        height: 150px;
+        border-radius: 10px;
+        transition: 0.3s;
+        border: 3px solid #fff;
+      }
+
+      .gallery img:hover {
+        transform: scale(1.1);
+        border-color: #333;
+      }
+
+      /* Toggle Button */
+      .toggle-btn {
+        background: crimson;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        margin-top: 20px;
+      }
+
+      .toggle-btn:hover {
+        background: darkred;
+      }
+
+      /* Hidden class */
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+
+    <h1>Welcome to My Interactive Page</h1>
+
+    <!-- Buttons -->
+    <button class="btn" onclick="
+    document.getElementById('dynamic-box').innerText = 'Changed!';
+    document.getElementById('dynamic-box').style.transform = 'rotate(360deg)';
+   document.getElementById('dynamic-box').style.borderRadius = '50%';
+   document.getElementById('second-dynamic-box').innerText = 'Changed!';
+   document.getElementById('second-dynamic-box').style.transform = 'rotate(360deg)';
+                                 document.getElementById('second-dynamic-box').style.borderRadius = '55%';">
+      Change Boxes
+    </button>
+
+    <button class="btn" onclick="
+      (function() {
+      var colors = ['#ff0000', '#00ff00', '#0000ff', '#ffff00', '#ff00ff', '#00ffff'];
+      var box1 = document.getElementById('dynamic-box');
+     var box2 = document.getElementById('second-dynamic-box');
+    var currentColor = box1.style.backgroundColor;
+    var newColor = colors[(colors.indexOf(currentColor) + 1) % colors.length];
+    box1.style.backgroundColor = newColor;
+     box2.style.backgroundColor = newColor; })();">
+      Change Color
+    </button>
+
+    <!-- Dynamic Boxes -->
+    <div id="dynamic-box" class="dynamic-box">Box 1</div>
+    <div id="second-dynamic-box" class="dynamic-box">Box 2</div>
+
+    <!-- Image Gallery -->
+    <button class="toggle-btn" onclick="
+                                        var gallery = document.getElementById('image-gallery');
+                                        gallery.classList.toggle('hidden');">
+      Toggle Gallery
+    </button>
+
+    <div class="gallery hidden" id="image-gallery">
+      <img src="https://source.unsplash.com/200x150/?nature,water" alt="Nature">
+      <img src="https://source.unsplash.com/200x150/?mountains,sky" alt="Mountains">
+      <img src="https://source.unsplash.com/200x150/?forest,trees" alt="Forest">
+      <img src="https://source.unsplash.com/200x150/?city,night" alt="City">
+    </div>
+
+  </body>
+</html>

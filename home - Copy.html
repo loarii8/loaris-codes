@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive Dragon Explains Programming Languages</title>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            height: 100vh;
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+            color: white;
+            position: relative;
+            animation: backgroundChange 10s infinite alternate;
+            background-size: 300% 300%;
+        }
+
+        /* Background animation */
+        @keyframes backgroundChange {
+            0% { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); }
+            25% { background: linear-gradient(135deg, #1e3c72, #2a5298, #3a6073); }
+            50% { background: linear-gradient(135deg, #2193b0, #6dd5ed, #b2fefa); }
+            75% { background: linear-gradient(135deg, #0b486b, #f56217, #004d7a); }
+            100% { background: linear-gradient(135deg, #0f0c29, #302b63, #24243e); }
+        }
+
+        /* Stylish container for text */
+        .content {
+            text-align: center;
+            z-index: 2;
+        }
+
+        .content h1 {
+            font-size: 2.5em;
+            margin-bottom: 15px;
+        }
+
+        .content p {
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        .btn {
+            padding: 12px 20px;
+            background-color: #ff6347;
+            border: none;
+            color: white;
+            font-size: 0.9em;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(255, 99, 71, 0.6);
+            transition: transform 0.2s ease;
+            outline: none;
+        }
+
+        .btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 10px 20px rgba(255, 99, 71, 0.8);
+            outline: 2px solid rgba(255, 255, 255, 0.5);
+        }
+
+        /* The dragon character */
+        .dragon {
+            position: absolute;
+            width: 80px;
+            height: 80px;
+            background-color: #ff6347;
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255, 99, 71, 0.8);
+            z-index: 1;
+            pointer-events: none;
+            display: block;
+            transition: background-color 0.1s ease, box-shadow 0.1s ease;
+        }
+
+        .dragon::before {
+            content: '';
+            position: absolute;
+            top: 25px;
+            left: 30px;
+            width: 25px;
+            height: 25px;
+            background-color: #ff4500;
+            border-radius: 50%;
+        }
+
+        .dragon::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 10px;
+            width: 50px;
+            height: 15px;
+            background-color: #ff4500;
+            border-radius: 50%;
+        }
+
+        /* Hidden content */
+        .explanation {
+            display: none;
+            position: absolute;
+            top: 10%;
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 20px;
+            border-radius: 10px;
+            width: 50%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+        }
+
+        .explanation h2 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .explanation h3 {
+            font-size: 1.4em;
+            margin-top: 15px;
+        }
+
+        .explanation p {
+            font-size: 1em;
+            line-height: 1.4;
+            margin-bottom: 10px;
+        }
+
+        /* Text above the floating dragon */
+        .floating-text {
+            position: absolute;
+            top: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.2em;
+            color: white;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Content section -->
+    <div class="content" id="content">
+        <h1>Welcome to the Dragon's Den!</h1>
+        <p>Click the button to learn about programming languages from our dragon.</p>
+        <button class="btn" id="startButton" onclick="showExplanation()">Start Learning</button>
+    </div>
+
+    <!-- Hidden Explanation Section -->
+    <div class="explanation" id="explanation">
+        <h2>The Dragon Explains Programming Languages</h2>
+        <h3>1. JavaScript</h3>
+        <p><strong>JavaScript</strong> is a versatile and widely-used programming language, especially for building interactive websites. It runs on the client side and is an essential part of web development alongside HTML and CSS.</p>
+        <h3>2. Python</h3>
+        <p><strong>Python</strong> is known for its simplicity and readability. It’s great for web development, data analysis, machine learning, and automation.</p>
+        <h3>3. Ruby</h3>
+        <p><strong>Ruby</strong> is a dynamic, object-oriented language. It's most famous for the Ruby on Rails framework, which is used for web development.</p>
+        <h3>4. Java</h3>
+        <p><strong>Java</strong> is a class-based, object-oriented language that is designed to be platform-independent. It is used for building large-scale applications, mobile apps, and web services.</p>
+        <h3>5. C++</h3>
+        <p><strong>C++</strong> is a powerful programming language commonly used for system software, game development, and applications requiring high-performance computing.</p>
+        <p>These languages play a crucial role in the development of modern software and systems!</p>
+        <button class="btn" id="showExplanationButton" onclick="closeExplanation()">Close Explanation</button>
+    </div>
+
+    <!-- Dragon-like creature that follows the mouse -->
+    <div class="dragon" id="dragon"></div>
+
+    <script>
+        const dragon = document.getElementById('dragon');
+        const explanation = document.getElementById('explanation');
+        const startButton = document.getElementById('startButton');
+        const content = document.getElementById('content');
+        const showExplanationButton = document.getElementById('showExplanationButton');
+
+        let floatingDragon = null;
+
+        // Show the explanation and hide the button and introductory text
+        function showExplanation() {
+            explanation.style.display = 'block'; // Show explanation
+            content.style.display = 'none'; // Hide the content section
+            startButton.style.display = 'none'; // Hide "Start Learning" button
+        }
+
+        // Function to make the dragon follow the mouse and change color based on the background
+        function changeDragonColor() {
+            const computedStyle = getComputedStyle(document.body);
+            const background = computedStyle.backgroundImage.match(/(rgba?\([^\)]+\))/g);
+            const color = background ? background[0] : 'rgb(255, 99, 71)';
+            dragon.style.backgroundColor = color;
+            dragon.style.boxShadow = `0 0 15px ${color}`;
+        }
+
+        // Function to make the dragon follow the mouse without delay
+        document.addEventListener('mousemove', (event) => {
+            const mouseX = event.pageX;
+            const mouseY = event.pageY;
+
+            // Directly update the position of the dragon without animations
+            dragon.style.left = `${mouseX - 40}px`;
+            dragon.style.top = `${mouseY - 40}px`;
+
+            changeDragonColor(); // Update the color of the dragon based on background
+        });
+
+        // Close the explanation and show the floating dragon
+        function closeExplanation() {
+            explanation.style.display = 'none'; // Hide the explanation
+            content.style.display = 'block'; // Show the content section again
+            startButton.style.display = 'block'; // Show "Start Learning" button again
+            createFloatingDragon(); // Create a floating dragon
+        }
+
+        // Function to create a floating dragon that moves smoothly and changes color
+        function createFloatingDragon() {
+            floatingDragon = document.createElement('div');
+            floatingDragon.classList.add('dragon');
+            document.body.appendChild(floatingDragon);
+
+            const floatingText = document.createElement('div');
+            floatingText.classList.add('floating-text');
+            floatingText.textContent = 'Do you like the explanation?';
+            document.body.appendChild(floatingText);
+
+            let posX = Math.random() * window.innerWidth;
+            let posY = Math.random() * window.innerHeight;
+            let directionX = (Math.random() - 0.5) * 2;
+            let directionY = (Math.random() - 0.5) * 2;
+            let speedX = 2 + Math.random() * 2;
+            let speedY = 2 + Math.random() * 2;
+
+            function moveDragon() {
+                posX += directionX * speedX;
+                posY += directionY * speedY;
+
+                if (posX <= 0 || posX >= window.innerWidth - 80) {
+                    directionX *= -1;
+                }
+                if (posY <= 0 || posY >= window.innerHeight - 80) {
+                    directionY *= -1;
+                }
+
+                floatingDragon.style.left = `${posX}px`;
+                floatingDragon.style.top = `${posY}px`;
+
+                changeDragonColor(); // Update floating dragon color
+                requestAnimationFrame(moveDragon);
+            }
+
+            moveDragon();
+        }
+    </script>
+
+</body>
+</html>

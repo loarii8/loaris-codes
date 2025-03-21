@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pricing Table</title>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f7f7f7;
+            color: #333;
+        }
+
+        header {
+            position: absolute;
+            top: 10px;
+            right: 20px;
+            font-size: 1.5rem;
+            color: #333;
+            font-weight: bold;
+        }
+
+        header span {
+            color: #00bcd4;
+        }
+
+        /* Pricing Table Container */
+        .pricing-table-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 50px;
+            padding: 20px;
+        }
+
+        /* Pricing Table */
+        table {
+            width: 100%;
+            max-width: 1200px;
+            border-collapse: collapse;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* Plan Highlight */
+        .featured {
+            background-color: #ffeb3b;
+            border: 2px solid #ff9800;
+            font-weight: bold;
+        }
+
+        .plan-name {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .price {
+            font-size: 1.8rem;
+            color: #00bcd4;
+            font-weight: bold;
+        }
+
+        .features {
+            text-align: left;
+            margin: 15px 0;
+        }
+
+        /* Media Queries */
+        @media screen and (max-width: 768px) {
+            table {
+                width: 100%;
+                display: block;
+                overflow-x: auto;
+                white-space: nowrap;
+            }
+
+            td, th {
+                padding: 10px;
+                font-size: 0.9rem;
+            }
+
+            .pricing-table-container {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .plan-name {
+                font-size: 1rem;
+            }
+
+            .price {
+                font-size: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <header>
+        <span>I Kryva Yessss</span>
+    </header>
+
+    <!-- Pricing Table -->
+    <div class="pricing-table-container">
+        <table>
+            <thead>
+                <tr>
+                    <th>Plan</th>
+                    <th>Price</th>
+                    <th>Features</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Basic Plan -->
+                <tr>
+                    <td class="plan-name">Maqueen V2 Pro Basic</td>
+                    <td class="price">$99.99</td>
+                    <td class="features">
+                        <ul>
+                            <li>Maqueen V2 Pro Robot</li>
+                            <li>Standard Battery</li>
+                            <li>Microbit V1 Support</li>
+                            <li>Basic Programming</li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <!-- Standard Plan (Featured) -->
+                <tr class="featured">
+                    <td class="plan-name">Maqueen V2 Pro Standard</td>
+                    <td class="price">$149.99</td>
+                    <td class="features">
+                        <ul>
+                            <li>Maqueen V2 Pro Robot</li>
+                            <li>Premium Battery (Longer life)</li>
+                            <li>Microbit V2 & V1 Support</li>
+                            <li>Advanced Programming</li>
+                            <li>Extended Warranty</li>
+                        </ul>
+                    </td>
+                </tr>
+
+                <!-- Advanced Plan -->
+                <tr>
+                    <td class="plan-name">Maqueen V2 Pro Advanced</td>
+                    <td class="price">$199.99</td>
+                    <td class="features">
+                        <ul>
+                            <li>Maqueen V2 Pro Robot</li>
+                            <li>Extra Battery Pack</li>
+                            <li>Microbit V2 & V1 Support</li>
+                            <li>Advanced Programming + AI Support</li>
+                            <li>Priority Customer Support</li>
+                        </ul>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+	<h1>Key Features of the Page:
+Header (I Kryva Yessss):
+
+
+
+Pricing Table:
+
+There are three plans: Maqueen V2 Pro Basic, Maqueen V2 Pro Standard (featured), and Maqueen V2 Pro Advanced.
+Each plan has a name, price, and a list of features.
+The "Standard" plan is highlighted with a background color and border to mark it as the featured plan.
+Responsive Design:
+
+The pricing table is styled to be responsive. On screens smaller than 768px, the table will be displayed as a horizontal scrollable element, making it more mobile-friendly.
+The layout is adjusted, with text sizes and paddings reduced for better viewing on smaller devices.
+CSS Styling:
+
+Color Scheme: Green headers for each plan, blue price text, and yellow highlights for the featured plan.
+Table Borders and Shadows: Subtle borders and shadow effects for better separation and readability.
+Hover Effects: Smooth hover effects for links or items if needed (you can expand this to any element you'd like to have interactive effects).
+How it works:
+The page is designed with a simple layout for clarity.
+It uses flexbox and CSS media queries to adjust the layout depending on the screen size.
+For mobile users, a horizontal scroll is enabled for the table if it cannot fit within the screen width.
+Customization:
+Images: You can replace the img elements with actual images for each plan or additional details if required.
+Content: Feel free to update the content (prices, features, etc.) as per your own needs.
+This code should work well on most browsers and devices, providing a clean, responsive, and clear display for your pricing table.</h1>
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="al">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Button Style Changer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        
+        .container {
+            text-align: center;
+        }
+        
+        .button-container {
+            margin-bottom: 20px;
+        }
+        
+        .button {
+            padding: 15px 30px;
+            margin: 5px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        /* Default style for the 4 main buttons */
+        
+        .button1,
+        .button2,
+        .button3,
+        .button4 {
+            background-color: #4CAF50;
+            border-radius: 5px;
+            color: white;
+        }
+        /* Style for the change buttons */
+        
+        .change-button {
+            background-color: #2196F3;
+            color: white;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="button-container">
+            <button class="button button1">Button 1</button>
+            <button class="button button2">Button 2</button>
+            <button class="button button3">Button 3</button>
+            <button class="button button4">Button 4</button>
+        </div>
+
+        <div>
+            <button class="change-button" onclick="changeStyle(1)">Change Style 1</button>
+            <button class="change-button" onclick="changeStyle(2)">Change Style 2</button>
+            <button class="change-button" onclick="changeStyle(3)">Change Style 3</button>
+            <button class="change-button" onclick="changeStyle(4)">Change Style 4</button>
+        </div>
+    </div>
+
+    <script>
+        function changeStyle(styleNumber) {
+            const buttons = document.querySelectorAll('.button');
+            switch (styleNumber) {
+                case 1:
+                    buttons.forEach(button => {
+                        button.style.backgroundColor = '#FF5733';
+                        button.style.borderRadius = '20px';
+                        button.style.color = '#fff';
+                    });
+                    break;
+                case 2:
+                    buttons.forEach(button => {
+                        button.style.backgroundColor = '#FFC300';
+                        button.style.borderRadius = '50%';
+                        button.style.color = '#000';
+                    });
+                    break;
+                case 3:
+                    buttons.forEach(button => {
+                        button.style.backgroundColor = '#DAF7A6';
+                        button.style.borderRadius = '0';
+                        button.style.color = '#333';
+                    });
+                    break;
+                case 4:
+                    buttons.forEach(button => {
+                        button.style.backgroundColor = '#900C3F';
+                        button.style.borderRadius = '15px';
+                        button.style.color = '#FFF';
+                    });
+                    break;
+                default:
+                    break;
+            }
+        }
+    </script>
+</body>
+
+</html>

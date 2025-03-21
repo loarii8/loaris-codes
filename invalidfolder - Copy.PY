@@ -1,4 +1,4 @@
-import tkinter as tk
+python.main
 
 # Function to handle button click
 def on_button_click(value):
@@ -14,7 +14,7 @@ def evaluate_expression():
         entry.insert(0, result)
     except Exception as e:
         entry.delete(0, tk.END)
-        entry.insert(0, "cant divide by zero")
+        entry.insert(0, "Error")
 
 # Function to clear the entry field
 def clear_entry():
@@ -46,7 +46,7 @@ for (text, row, col) in buttons:
         button = tk.Button(window, text=text, width=10, height=3, font=("Arial", 18), command=clear_entry)
     else:
         button = tk.Button(window, text=text, width=5, height=3, font=("Arial", 18), command=lambda value=text: on_button_click(value))
-
+    
     button.grid(row=row, column=col, padx=5, pady=5)
 
 # Run the application

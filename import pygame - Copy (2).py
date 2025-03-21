@@ -1,3 +1,4 @@
+import pygame
 import random
 
 # Initialize pygame
@@ -60,7 +61,7 @@ class Cactus:
     def __init__(self):
         self.x = WIDTH
         self.y = HEIGHT - CACTUS_HEIGHT - 10
-        self.width = CACTUS_WIDTH      
+        self.width = CACTUS_WIDTH
         self.height = CACTUS_HEIGHT
         self.color = BROWN
 

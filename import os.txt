@@ -1,0 +1,10 @@
+import os
+import random
+
+if 5 > 2:
+    print("Hello world")
+
+if 5 > 10:
+    print("FIVE ISN'T GREATER THAN TWO")
+else:
+    print("10 IS GREATER THAN FIVE")

@@ -20,6 +20,7 @@ WHITE = (255, 255, 255)
 BLACK = (0, 0, 0)
 GREEN = (0, 255, 0)
 BLUE = (0, 191, 255)
+BROWN = (139, 69, 19)
 
 # Create screen
 screen = pygame.display.set_mode((WIDTH, HEIGHT))
@@ -34,7 +35,7 @@ class Bird:
         self.x = WIDTH // 4
         self.y = HEIGHT // 2
         self.velocity = 0
-
+    
     def jump(self):
         self.velocity = JUMP_VELOCITY
 
@@ -44,7 +45,7 @@ class Bird:
         if self.y >= HEIGHT - BIRD_SIZE:  # Hit the ground
             self.y = HEIGHT - BIRD_SIZE
             self.velocity = 0
-
+    
     def draw(self):
         pygame.draw.rect(screen, BLACK, (self.x, self.y, BIRD_SIZE, BIRD_SIZE))
 
@@ -55,17 +56,16 @@ class Pipe:
         self.height = random.randint(100, HEIGHT - PIPE_GAP - 100)
         self.top_rect = pygame.Rect(self.x, 0, PIPE_WIDTH, self.height)
         self.bottom_rect = pygame.Rect(self.x, self.height + PIPE_GAP, PIPE_WIDTH, HEIGHT - self.height - PIPE_GAP)
-        self.passed = False
-
+    
     def move(self):
         self.x -= PIPE_VELOCITY
         self.top_rect.x = self.x
         self.bottom_rect.x = self.x
-
+    
     def draw(self):
         pygame.draw.rect(screen, GREEN, self.top_rect)
         pygame.draw.rect(screen, GREEN, self.bottom_rect)
-
+    
     def off_screen(self):
         return self.x + PIPE_WIDTH < 0
 
@@ -96,24 +96,20 @@ def game_loop():
         # Pipe movement and generation
         if pipes[-1].x < WIDTH - 300:  # Create new pipe when the last one is far enough
             pipes.append(Pipe())
-
+        
         for pipe in pipes:
             pipe.move()
             pipe.draw()
             if pipe.off_screen():
                 pipes.remove(pipe)
-
-            # Check if the bird has passed the pipe
-            if not pipe.passed and bird.x > pipe.x + PIPE_WIDTH:
-                pipe.passed = True
                 score += 1  # Increment score when passing through a pipe
-
+        
         # Collision detection
         for pipe in pipes:
             if bird.x + BIRD_SIZE > pipe.x and bird.x < pipe.x + PIPE_WIDTH:
                 if bird.y < pipe.height or bird.y + BIRD_SIZE > pipe.height + PIPE_GAP:
                     running = False  # Game over on collision
-
+        
         # Draw the score
         score_text = font.render(f"Score: {score}", True, BLACK)
         screen.blit(score_text, (10, 10))

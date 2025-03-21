@@ -6,7 +6,7 @@ def pastrimi_i_ekranit():
     """Pastro ekranin për të simuluar një skenë të re."""
     os.system('cls' if os.name == 'nt' else 'clear')
 
-def printo_ngadalë(str, vonesë=0.03):
+def printo_ngadalë(str, vonesë=0.05):
     """Printon tekstin ngadalë, shkronjë për shkronjë."""
     for shkronjë in str:
         print(shkronjë, end='', flush=True)
@@ -17,9 +17,9 @@ def printo_visuale(skena):
     """Printon një pamje ASCII në bazë të skenës."""
     pamjet = {
         "fillim": """
-        ============================================
-        | Mirësevini në Aventurën e Madhe!         |
-        ============================================
+        ============================
+        | Mirësevini në Aventurën!|
+        ============================
             Udhëtimi juaj fillon këtu...
         """,
         "rruga_krejt": """
@@ -41,10 +41,10 @@ def printo_visuale(skena):
         """,
         "pasuri": """
         Gjetët një arkë të fshehtë thesari!
-        _  _  _  _  _  _
-       | | | | | | | | |
-       | | | | | | | | |
-       |_|_|_|_|_|_|_|_|
+        _  _  _  _ 
+       | | | | | | |
+       | | | | | | |
+       |_|_|_|_|_|_|
         Brenda gjeni 50 copa ari!
         """,
         "dragua": """
@@ -70,23 +70,15 @@ def printo_visuale(skena):
            \\   (_)   /
             `-._____.-'
         Magjistari ju jep një magji zjarri!
-        """,
-        "hendek": """
-        Hyni në një hendek të thellë!
-        _______
-       /       \\
-      |   O O   |
-       \\_______/
-        Ju rrëzoheni dhe humbni disa pikë shëndeti.
         """
     }
     printo_ngadalë(pamjet.get(skena, ""))
 
 def zgjedh_aksion():
     """Përgjigje për zgjedhjen e një veprimi."""
-    printo_ngadalë("Keni 3 rrugë para jush. dhe mund te ktheheni mbrapa")
-    printo_ngadalë("A doni të shkoni majtas, djathtas, përpara ose mbrapa?")
-    zgjedhja = input("Shkruani 'majtas', 'djathtas', 'përpara' ose 'mbrapa': ").lower()
+    printo_ngadalë("Keni dy rrugë para jush.")
+    printo_ngadalë("A doni të shkoni majtas apo djathtas?")
+    zgjedhja = input("Shkruani 'majtas' ose 'djathtas': ").lower()
     return zgjedhja
 
 def ngjarje_random():
@@ -106,36 +98,17 @@ def loja_aventura():
     shëndeti = 100
     ari = 0
     magji = []
-    pozicioni = "fillim"
-    historiku_pozicionit = ["fillim"]
 
     while shëndeti > 0:
         # Merrni zgjedhjen e përdoruesit
         aksioni = zgjedh_aksion()
         pastrimi_i_ekranit()
 
-        # Përditësoni pozicionin dhe historikun e pozicionit
+        # Shfaq pamjen në bazë të rrugës të zgjedhur
         if aksioni == 'majtas':
-            pozicioni = "rruga_krejt"
-        elif aksioni == 'djathtas':
-            pozicioni = "rruga_djathtas"
-        elif aksioni == 'përpara':
-            if pozicioni == "rruga_krejt":
-                pozicioni = "rruga_djathtas"
-            elif pozicioni == "rruga_djathtas":
-                pozicioni = "rruga_krejt"
-        elif aksioni == 'mbrapa':
-            if len(historiku_pozicionit) > 1:
-                historiku_pozicionit.pop()
-                pozicioni = historiku_pozicionit[-1]
-            else:
-                printo_ngadalë("Nuk mund të shkoni më mbrapa se këtu.")
-                continue
-
-        historiku_pozicionit.append(pozicioni)
-
-        # Shfaq pamjen në bazë të rrugës së zgjedhur
-        printo_visuale(pozicioni)
+            printo_visuale("rruga_krejt")
+        else:
+            printo_visuale("rruga_djathtas")
 
         # Ngjarja e rastësishme në bazë të rrugës të zgjedhur
         ngjarja = ngjarje_random()
@@ -152,12 +125,12 @@ def loja_aventura():
 
         # Shfaq statusin aktual
         printo_ngadalë(f"Shëndeti aktual: {shëndeti} | Ari: {ari} | Magjitë: {magji}")
-
+        
         # Kontrolloni nëse shëndeti bie në zero ose më poshtë
         if shëndeti <= 0:
             printo_ngadalë("Keni humbur të gjithë shëndetin tuaj. Loja ka mbaruar!")
             break
-
+        
         # Pyetni nëse lojtari dëshiron të vazhdojë ose jo
         vazhdo_lojën = input("Doni të vazhdoni aventurën? (po/jo): ").lower()
         if vazhdo_lojën != 'po':

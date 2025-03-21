@@ -5,7 +5,7 @@ pygame.init()
 
 # Constants
 WIDTH, HEIGHT = 800, 400
-FPS = 144
+FPS = 60
 DINO_WIDTH, DINO_HEIGHT = 50, 50
 CACTUS_WIDTH, CACTUS_HEIGHT = 20, 40
 JUMP_VELOCITY = -15
@@ -60,7 +60,7 @@ class Cactus:
     def __init__(self):
         self.x = WIDTH
         self.y = HEIGHT - CACTUS_HEIGHT - 10
-        self.width = CACTUS_WIDTH      
+        self.width = CACTUS_WIDTH
         self.height = CACTUS_HEIGHT
         self.color = BROWN
 
